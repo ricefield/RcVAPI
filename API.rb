@@ -7,6 +7,8 @@ require 'json'
 require 'pp'
 # require 'haml'
 # require 'builder'
+require 'set'
+
 
 get '/' do
 	"welcome to RcV (unofficial) API"
@@ -17,6 +19,10 @@ end
 
 # get a single verse
 get '/verse/:book/:ch/:verse' do
+    content_type :json
+
+    book = books[':book']
+    PAGE_URL = "http://online.recoveryversion.org/getScripture.asp?vinfo="+book+:ch+":"+:verse
 
 end
 
