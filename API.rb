@@ -21,8 +21,17 @@ end
 get '/verse/:book/:ch/:verse' do
     content_type :json
 
-    book = books[':book']
-    PAGE_URL = "http://online.recoveryversion.org/getScripture.asp?vinfo="+book+:ch+":"+:verse
+    PAGE_URL = "http://online.recoveryversion.org/getScripture.asp?vinfo="+:book+:ch+":"+:verse
+    page = Nokogiri::HTML(open(PAGE_URL))
+
+    # remove footnotes/crossreferences
+    page.css("div#content p.verses sup").remove
+
+    # remove 
+    page.css("div#content p.verses b.versenum").remove
+
+    # yields clean verse text
+    page.css("div#content p.verses").text.strip
 
 end
 
