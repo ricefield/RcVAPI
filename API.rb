@@ -20,8 +20,14 @@ end
 # get a single verse
 get '/verse/:book/:ch/:verse' do
     content_type :json
+    verse = Hash.new
 
     PAGE_URL = "http://online.recoveryversion.org/getScripture.asp?vinfo="+:book+:ch+":"+:verse
+
+    # start building json
+    verse['ref'] = :book + " " + :ch + ":" + :verse
+    verse['url'] = PAGE_URL
+    
     page = Nokogiri::HTML(open(PAGE_URL))
 
     # remove footnotes/crossreferences
@@ -31,7 +37,9 @@ get '/verse/:book/:ch/:verse' do
     page.css("div#content p.verses b.versenum").remove
 
     # yields clean verse text
-    page.css("div#content p.verses").text.strip
+    verse['text'] = page.css("div#content p.verses").text.strip
+
+    verse.to_json
 
 end
 
