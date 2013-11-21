@@ -10,6 +10,7 @@ require 'pp'
 require 'set'
 
 
+
 get '/' do
 	"welcome to RcV (unofficial) API"
     
@@ -18,7 +19,32 @@ get '/' do
 end
 
 # get a single verse
-get '/verse/:book/:ch/:verse' do
+get '/v/:book/:ch/:verse' do
+
+end
+
+# get a range of verses
+# ex: /vv/Gen/1/26/Gen/1/27
+get '/vv/:begbk/:bgch/:bgv/:endbk/:endch/:endv' do
+
+end
+
+# get a range of verses within the same chapter
+# ex: /vv/2Cor/3/16/18
+get '/vv/:book/:ch/:beg/:end' do
+
+end
+
+# OSIS calls
+# these are API calls that accept the OSIS verse reference format
+# more info: 
+
+get '/osis/' do
+
+end
+
+def rcv
+
     content_type :json
     verse = Hash.new
 
@@ -40,21 +66,10 @@ get '/verse/:book/:ch/:verse' do
     verse['text'] = page.css("div#content p.verses").text.strip
 
     verse.to_json
-
-end
-
-# get a range of verses
-get '/verses/:book/:ch/:beg/:end' do
-
-end 
-
-# get footnotes
-# only one verse at a time
-get '/hymn/:id' do
     
 end
 
-# get 
-get '/search/:string' do
 
-end
+
+
+
