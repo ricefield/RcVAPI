@@ -43,6 +43,7 @@ get '/osis/' do
 
 end
 
+
 def get_rcv(book, chapter, verse, endbook=nil, endchapter=nil, endverse=nil)
 
     content_type :json
@@ -71,16 +72,15 @@ def get_rcv(book, chapter, verse, endbook=nil, endchapter=nil, endverse=nil)
     ref = [].push(book, chapter, verse)  # beginning reference (minus verse)
     prev = []
 
-    for verse in page.css("p.verses") do
+    for verse in page.css("p.verses")
 
-        # calculate the reference <ref
+        # calculate the reference <ref>
         prev = ref
         vnum = verse.css("b.versenum").text
         # checks if this is a new chapter (as opposed to the beginning of the sequence)
         if vnum == '1' and prev[2].to_i > vnum.to_i
             # and if so, increment the chapter number
             ref[1] = ref[1].to_i++
-        end
         # update the verse number
         ref[2] = vnum
         ref = ref.join('.')
