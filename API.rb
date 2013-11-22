@@ -63,7 +63,7 @@ def get_rcv(book, chapter, verse, endbook=nil, endchapter=nil, endverse=nil)
     page = Nokogiri::HTML(open(url))
 
     # error-check
-    unless page.css("p.error").nil?
+    unless page.css("p.error").empty?
         data['error'] = "Your request was invalid"
         return data
     end
