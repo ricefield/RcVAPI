@@ -20,13 +20,15 @@ end
 
 # get a single verse
 get '/v/:book/:ch/:verse' do
-
+    content_type :json
+    get_rcv(:book, :ch, :verse).to_json
 end
 
 # get a single range of verses
 # ex: /vv/Gen/1/26/Gen/1/27
 get '/vrange/:begbk/:bgch/:bgv/:endbk/:endch/:endv' do
-
+    content_type :json
+    get_rcv(:begbk, :begch, :begv, :endbk, :endch, :endv).to_json
 end
 
 # get a single range of verses within the same chapter
