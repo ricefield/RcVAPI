@@ -68,22 +68,22 @@ def get_rcv(book, chapter, verse, endbook=nil, endchapter=nil, endverse=nil)
     end
 
     # helpful for calculating references
-    ref = [].push(book, chapter, verse)  # beginning reference (minus verse)
+    cur = [].push(book, chapter, verse)  # beginning reference (minus verse)
     prev = []
 
     for verse in page.css("p.verses")
 
-        # calculate the reference <ref>
-        prev = ref
+        # calculate the reference
+        prev = cur
         vnum = verse.css("b.versenum").text
         # checks if this is a new chapter (as opposed to the beginning of the sequence)
         if vnum == '1' and prev[2].to_i > vnum.to_i
             # and if so, increment the chapter number
-            ref[1] = ref[1].to_i + 1
+            cur[1] = cur[1].to_i + 1
         end
         # update the verse number
-        ref[2] = vnum
-        ref = ref.join('.')
+        cur[2] = vnum
+        ref = cur.join('.')
 
         # remove bolded verse number
         verse.css("b.versenum").remove
