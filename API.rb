@@ -12,7 +12,7 @@ require 'set'
 
 
 get '/' do
-	"welcome to RcV (unofficial) API"
+    "welcome to RcV (unofficial) API"
     
     # HAML ? documentation page
     
@@ -46,7 +46,6 @@ end
 
 def get_rcv(book, chapter, verse, endbook=nil, endchapter=nil, endverse=nil)
 
-    content_type :json
     data = Hash.new
 
     if endbook.nil? or endchapter.nil? or endverse.nil?
@@ -80,7 +79,8 @@ def get_rcv(book, chapter, verse, endbook=nil, endchapter=nil, endverse=nil)
         # checks if this is a new chapter (as opposed to the beginning of the sequence)
         if vnum == '1' and prev[2].to_i > vnum.to_i
             # and if so, increment the chapter number
-            ref[1] = ref[1].to_i++
+            ref[1] = ref[1].to_i + 1
+        end
         # update the verse number
         ref[2] = vnum
         ref = ref.join('.')
@@ -91,11 +91,11 @@ def get_rcv(book, chapter, verse, endbook=nil, endchapter=nil, endverse=nil)
         verse.css("sup").remove
 
         # put text in struct
-        data['verses'][ref] = verse.css("div#content p.verses").text.strip
+        data['verses'][ref] = verse.text.strip
 
     end
 
-    return data.to_json
+    return data
     
 end
 
