@@ -33,7 +33,7 @@ end
 
 # get a single range of verses within the same chapter
 # ex: /vv/2Cor/3/16/18
-get '/vrange/:book/:ch/:beg/:end' do
+get '/vrange/:book/:ch/:begv/:endv' do
 
 end
 
